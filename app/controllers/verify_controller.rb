@@ -4,13 +4,11 @@ class VerifyController < ApplicationController
       require 'uri'
       @url = params[:url]
       url = URI.parse(@url)
-      res = Net::HTTP.start(url.hostname, url.port) {|http|
-          http.get('/')
-      }
-      
+      res = Net::HTTP.get_response(url)
+
       if res['location']
           newURI = URI.parse(res['location'])
-          else
+      else
           newURI = URI.parse(url.scheme + "://" + url.host)
       end
       
