@@ -1,11 +1,12 @@
 <% 
 require 'net/http'
 require 'uri'
-
+@url = params[:url]
 url = URI.parse(@url)
 res = Net::HTTP.start(url.host, url.port) {|http|
   http.get('/')
 }
+
 	newURI = URI.parse(res['location'])
 	fixedURI = URI.parse(newURI.scheme + "://" + newURI.host + "/favicon.ico")
 
