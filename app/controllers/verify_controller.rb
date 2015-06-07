@@ -18,7 +18,7 @@ class VerifyController < ApplicationController
       
       #get if second redirect happened
       #added while to keep redirecting until it stops. will this be an issue?
-      while response['location'] do
+      if response['location'] 
           response = Net::HTTP.get_response(URI.parse(response['location']))
       end
       
