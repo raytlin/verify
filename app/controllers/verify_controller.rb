@@ -2,8 +2,8 @@ class VerifyController < ApplicationController
   def index
       require 'net/http'
       require 'uri'
-      @url = params[:url]
-      url = URI.parse(@url)
+      
+      url = URI.parse(params[:url])
       res = Net::HTTP.get_response(url)
       #get if redirect happened
       if res['location']
@@ -17,7 +17,8 @@ class VerifyController < ApplicationController
       response = Net::HTTP.get_response(fixedURI)
       
       #get if second redirect happened
-      if response['location']
+      #added while to keep redirecting until it stops. will this be an issue?
+      while response['location'] do
           response = Net::HTTP.get_response(URI.parse(response['location']))
       end
       
