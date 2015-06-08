@@ -7,7 +7,7 @@ class VerifyController < ApplicationController
       res = Net::HTTP.get_response(url)
       #get if redirect happened
       if res['location']
-          
+          #keep requesting until no more redirects
           while res['location'] do
               newURI = URI.parse(res['location'])
               res = Net::HTTP.get_response(URI.parse(res['location']))
@@ -22,7 +22,6 @@ class VerifyController < ApplicationController
       response = Net::HTTP.get_response(fixedURI)
       
       #get if second redirect happened
-      #added while to keep redirecting until it stops. will this be an issue?
       if response['location']
           response = Net::HTTP.get_response(URI.parse(response['location']))
       end
